@@ -11,10 +11,10 @@ export class CreateCustomerDto {
 
   @IsNotEmpty()
   password: string;
-  
+
   cardNumber?: string;
-  
+
   cardType?: string;
-  
+
   address?: string;
 }

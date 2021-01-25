@@ -21,7 +21,7 @@ import { Customer } from './customer/entities/customer.entity';
       database: 'gestionale',
       entities: [Customer],
       synchronize: true,
-      keepConnectionAlive: true
+      keepConnectionAlive: true,
     }),
   ],
   controllers: [AppController],

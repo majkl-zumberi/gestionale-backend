@@ -16,12 +16,12 @@ export class Customer {
   @Column()
   password: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   cardNumber: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   cardType: string;
-  
-  @Column({nullable: true})
+
+  @Column({ nullable: true })
   address: string;
 }
