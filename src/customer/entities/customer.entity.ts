@@ -3,18 +3,25 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 export class Customer {
   @PrimaryGeneratedColumn()
   id: number;
+
   @Column()
   name: string;
+
   @Column()
   lastName: string;
+
   @Column()
   email: string;
+
   @Column()
   password: string;
-  @Column()
+
+  @Column({nullable: true})
   cardNumber: string;
-  @Column()
+
+  @Column({nullable: true})
   cardType: string;
-  @Column()
+  
+  @Column({nullable: true})
   address: string;
 }
