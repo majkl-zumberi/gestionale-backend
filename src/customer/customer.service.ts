@@ -12,8 +12,9 @@ export class CustomerService {
     private customerRepository: Repository<Customer>,
   ) {}
 
-  create(createCustomerDto: CreateCustomerDto) {
-    return this.customerRepository.save(createCustomerDto);
+  async create(createCustomerDto: CreateCustomerDto) {
+    const createCustomer = this.customerRepository.create(createCustomerDto);
+    return await this.customerRepository.save(createCustomer);
   }
 
   findAll(): Promise<Customer[]> {
