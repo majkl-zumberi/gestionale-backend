@@ -8,15 +8,14 @@ import { Invoice } from './entities/invoice.entity';
 
 @Injectable()
 export class InvoiceService {
-
   constructor(
     @InjectRepository(Order)
     private orderRepository: Repository<Order>,
     @InjectRepository(Invoice)
     private invoiceRepository: Repository<Invoice>,
   ) {}
-  
-  async create(createInvoiceDto: CreateInvoiceDto, id_order:number) {
+
+  async create(createInvoiceDto: CreateInvoiceDto, id_order: number) {
     const order = await this.orderRepository.findOne({ id: id_order });
     const newInvoice = await this.invoiceRepository.create({
       ...createInvoiceDto,
@@ -26,27 +25,37 @@ export class InvoiceService {
   }
 
   findAll() {
-    return this.invoiceRepository.find({relations:['order']});
+    return this.invoiceRepository.find({ relations: ['order'] });
   }
 
   async findOne(id: number) {
-    const article = await this.invoiceRepository.findOne(id, {relations:['order']});
-    if(article)
-      return article
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: `article not found for provided id:${id}`,
-        },
-        HttpStatus.FORBIDDEN,
-      );
+    const article = await this.invoiceRepository.findOne(id, {
+      relations: ['order'],
+    });
+    if (article) return article;
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: `invoice not found for provided id:${id}`,
+      },
+      HttpStatus.FORBIDDEN,
+    );
   }
 
-  update(id: number, updateInvoiceDto: UpdateInvoiceDto) {
-    return `This action updates a #${id} invoice`;
+  async update(id: number, updateInvoiceDto: UpdateInvoiceDto) {
+    const updateInvoice = await this.findOne(id);
+
+    // update each property provided from dto
+    Object.keys(updateInvoice).forEach((property) => {
+      updateInvoice[property] = updateInvoiceDto[property];
+    });
+
+    return await this.invoiceRepository.save(updateInvoice);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} invoice`;
+  async remove(id: number) {
+    const removeInvoice = await this.findOne(id);
+
+    this.invoiceRepository.delete(removeInvoice);
   }
 }
