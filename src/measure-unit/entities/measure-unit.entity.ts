@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Article } from 'src/article/entities/article.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity()
 export class MeasureUnit {
   @PrimaryGeneratedColumn()
@@ -9,4 +10,7 @@ export class MeasureUnit {
 
   @Column({ nullable: true })
   description: string;
+
+  @OneToMany(() => Article, (article: Article) => article.measure)
+  articles: Article[];
 }

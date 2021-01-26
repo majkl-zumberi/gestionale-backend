@@ -9,6 +9,8 @@ import { OrderModule } from './order/order.module';
 import { Order } from './order/entities/order.entity';
 import { MeasureUnitModule } from './measure-unit/measure-unit.module';
 import { MeasureUnit } from './measure-unit/entities/measure-unit.entity';
+import { ArticleModule } from './article/article.module';
+import { Article } from './article/entities/article.entity';
 
 @Module({
   imports: [
@@ -23,12 +25,13 @@ import { MeasureUnit } from './measure-unit/entities/measure-unit.entity';
       username: process.env.DB_user,
       password: process.env.DB_password,
       database: 'gestionale',
-      entities: [Customer, Order, MeasureUnit],
+      entities: [Customer, Order, MeasureUnit, Article],
       synchronize: true,
       keepConnectionAlive: true,
     }),
     OrderModule,
     MeasureUnitModule,
+    ArticleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
