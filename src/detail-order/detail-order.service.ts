@@ -66,11 +66,20 @@ export class DetailOrderService {
     return FormatDetailOrders.formatOrders(detailOrdersByOrderId);
   }
 
-  update(id: number, updateDetailOrderDto: UpdateDetailOrderDto) {
-    return `This action updates a #${id} detailOrder`;
+  async update(id: number, updateDetailOrderDto: UpdateDetailOrderDto) {
+    const updateDetailOrder = await this.findOne(id);
+
+    // update each property provided from dto
+    Object.keys(updateDetailOrder).forEach((property) => {
+      updateDetailOrder[property] = updateDetailOrderDto[property];
+    });
+
+    return await this.detailRepository.save(updateDetailOrder);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} detailOrder`;
+  async remove(id: number) {
+    const updateDetailOrder = await this.findOne(id);
+
+    this.detailRepository.delete(updateDetailOrder);
   }
 }
