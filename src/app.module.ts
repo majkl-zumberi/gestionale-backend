@@ -7,6 +7,8 @@ import { CustomerModule } from './customer/customer.module';
 import { Customer } from './customer/entities/customer.entity';
 import { OrderModule } from './order/order.module';
 import { Order } from './order/entities/order.entity';
+import { MeasureUnitModule } from './measure-unit/measure-unit.module';
+import { MeasureUnit } from './measure-unit/entities/measure-unit.entity';
 
 @Module({
   imports: [
@@ -21,11 +23,12 @@ import { Order } from './order/entities/order.entity';
       username: process.env.DB_user,
       password: process.env.DB_password,
       database: 'gestionale',
-      entities: [Customer, Order],
+      entities: [Customer, Order, MeasureUnit],
       synchronize: true,
       keepConnectionAlive: true,
     }),
     OrderModule,
+    MeasureUnitModule,
   ],
   controllers: [AppController],
   providers: [AppService],
