@@ -51,7 +51,7 @@ export class CustomerService {
       throw new HttpException(
         {
           status: HttpStatus.FORBIDDEN,
-          error: `user not found for provided id:${id}`,
+          error: `customer not found for provided id:${id}`,
         },
         HttpStatus.FORBIDDEN,
       );
