@@ -1,10 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateMeasureUnitDto } from './dto/create-measure-unit.dto';
 import { UpdateMeasureUnitDto } from './dto/update-measure-unit.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Order } from '../order/entities/order.entity';
 import { Repository } from 'typeorm';
-import { Customer } from '../customer/entities/customer.entity';
 import { MeasureUnit } from './entities/measure-unit.entity';
 
 @Injectable()
@@ -26,11 +24,37 @@ export class MeasureUnitService {
     return this.measureRepository.findOne(id);
   }
 
-  update(id: number, updateMeasureUnitDto: UpdateMeasureUnitDto) {
-    return `This action updates a #${id} measureUnit`;
+  async update(id: number, updateMeasureUnitDto: UpdateMeasureUnitDto) {
+    if (!(await this.measureRepository.findOne(id))) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: `measure unit found for provided id:${id}`,
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    const updateMeasure: MeasureUnit = await this.measureRepository.findOne(id);
+
+    // update each property provided from dto
+    Object.keys(updateMeasure).forEach((property) => {
+      updateMeasure[property] = updateMeasureUnitDto[property];
+    });
+
+    return this.measureRepository.save(updateMeasure);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} measureUnit`;
+  async remove(id: number) {
+    if (!(await this.measureRepository.findOne(id))) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: `user not found for provided id:${id}`,
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    this.measureRepository.delete(id);
   }
 }
