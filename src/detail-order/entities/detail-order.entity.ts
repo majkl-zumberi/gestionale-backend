@@ -26,9 +26,7 @@ export class DetailOrder {
   protected total: number;
 
   @AfterLoad()
-  getUrl = () => {
-    console.log({ qty: this.quantity });
-    console.log({ article: this.article });
+  calculateTotalPrice = () => {
     this.total = this.quantity * Number(this.article.price);
   };
 }
