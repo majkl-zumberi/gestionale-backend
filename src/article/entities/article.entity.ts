@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { DetailOrder } from 'src/detail-order/entities/detail-order.entity';
 import { MeasureUnit } from 'src/measure-unit/entities/measure-unit.entity';
 import {
@@ -26,7 +25,9 @@ export class Article {
   @Column()
   available: number;
 
-  @ManyToOne(() => MeasureUnit, (measure: MeasureUnit) => measure.articles)
+  @ManyToOne(() => MeasureUnit, (measure: MeasureUnit) => measure.articles, {
+    onDelete: 'CASCADE',
+  })
   measure: MeasureUnit;
 
   @OneToMany(
