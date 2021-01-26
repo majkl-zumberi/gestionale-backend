@@ -13,6 +13,8 @@ import { ArticleModule } from './article/article.module';
 import { Article } from './article/entities/article.entity';
 import { InvoiceModule } from './invoice/invoice.module';
 import { Invoice } from './invoice/entities/invoice.entity';
+import { DetailOrderModule } from './detail-order/detail-order.module';
+import { DetailOrder } from './detail-order/entities/detail-order.entity';
 
 @Module({
   imports: [
@@ -27,7 +29,7 @@ import { Invoice } from './invoice/entities/invoice.entity';
       username: process.env.DB_user,
       password: process.env.DB_password,
       database: 'gestionale',
-      entities: [Customer, Order, MeasureUnit, Article, Invoice],
+      entities: [Customer, Order, MeasureUnit, Article, Invoice, DetailOrder],
       synchronize: true,
       keepConnectionAlive: true,
     }),
@@ -35,6 +37,7 @@ import { Invoice } from './invoice/entities/invoice.entity';
     MeasureUnitModule,
     ArticleModule,
     InvoiceModule,
+    DetailOrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

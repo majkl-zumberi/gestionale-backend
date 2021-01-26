@@ -1,10 +1,12 @@
 import { type } from 'os';
+import { DetailOrder } from 'src/detail-order/entities/detail-order.entity';
 import { MeasureUnit } from 'src/measure-unit/entities/measure-unit.entity';
 import {
     Entity,
     Column,
     PrimaryGeneratedColumn,
     ManyToOne,
+    OneToMany,
   } from 'typeorm';
 
 @Entity()
@@ -26,4 +28,7 @@ export class Article {
 
     @ManyToOne(() => MeasureUnit, (measure: MeasureUnit) => measure.articles)
     measure: MeasureUnit;
+
+    @OneToMany(() => DetailOrder, (detailOrder: DetailOrder) => detailOrder.article)
+    detailOrders: DetailOrder[];
 }
