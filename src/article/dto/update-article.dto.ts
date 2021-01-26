@@ -1,1 +1,6 @@
-export class UpdateArticleDto {}
+export class UpdateArticleDto {
+  name?: string;
+  price?: number;
+  expiry?: Date;
+  available?: number;
+}
