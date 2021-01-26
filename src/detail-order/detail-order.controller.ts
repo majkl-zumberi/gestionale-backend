@@ -38,6 +38,11 @@ export class DetailOrderController {
     return this.detailOrderService.findOne(+id);
   }
 
+  @Get('/order/:id')
+  findByOrder(@Param('id') id: string) {
+    return this.detailOrderService.findByOrderId(+id);
+  }
+
   @Put(':id')
   update(
     @Param('id') id: string,
