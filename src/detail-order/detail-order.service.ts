@@ -9,7 +9,6 @@ import { DetailOrder } from './entities/detail-order.entity';
 
 @Injectable()
 export class DetailOrderService {
-
   constructor(
     @InjectRepository(Order)
     private orderRepository: Repository<Order>,
@@ -19,13 +18,17 @@ export class DetailOrderService {
     private articleRepository: Repository<Article>,
   ) {}
 
-  async create(createDetailOrderDto: CreateDetailOrderDto, id_order:number,id_article:number) {
+  async create(
+    createDetailOrderDto: CreateDetailOrderDto,
+    id_order: number,
+    id_article: number,
+  ) {
     const order = await this.orderRepository.findOne({ id: id_order });
     const article = await this.articleRepository.findOne({ id: id_article });
     const newDetail = await this.detailRepository.create({
-      ...CreateDetailOrderDto,
+      ...createDetailOrderDto,
       order: order,
-      article: article
+      article: article,
     });
     return await this.detailRepository.save(newDetail);
   }
@@ -35,16 +38,17 @@ export class DetailOrderService {
   }
 
   async findOne(id: number) {
-    const detail = await this.detailRepository.findOne(id, {relations:['order','article']});
-    if(detail)
-      return detail
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: `detail order not found for provided id:${id}`,
-        },
-        HttpStatus.FORBIDDEN,
-      );
+    const detail = await this.detailRepository.findOne(id, {
+      relations: ['order', 'article'],
+    });
+    if (detail) return detail;
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: `detail order not found for provided id:${id}`,
+      },
+      HttpStatus.FORBIDDEN,
+    );
   }
 
   update(id: number, updateDetailOrderDto: UpdateDetailOrderDto) {
