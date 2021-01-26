@@ -8,7 +8,6 @@ import { Article } from './entities/article.entity';
 
 @Injectable()
 export class ArticleService {
-
   constructor(
     @InjectRepository(Article)
     private articleRepository: Repository<Article>,
@@ -16,7 +15,7 @@ export class ArticleService {
     private measureRepository: Repository<MeasureUnit>,
   ) {}
 
-  async create(createArticleDto: CreateArticleDto, id_measure:number) {
+  async create(createArticleDto: CreateArticleDto, id_measure: number) {
     const measure = await this.measureRepository.findOne({ id: id_measure });
     const newArticle = await this.articleRepository.create({
       ...createArticleDto,
@@ -31,23 +30,32 @@ export class ArticleService {
   }
 
   async findOne(id: number) {
-    const article = await this.articleRepository.findOne(id, {relations:['measure']});
-    if(article)
-      return article
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: `article not found for provided id:${id}`,
-        },
-        HttpStatus.FORBIDDEN,
-      );
+    const article = await this.articleRepository.findOne(id, {
+      relations: ['measure'],
+    });
+    if (article) return article;
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: `article not found for provided id:${id}`,
+      },
+      HttpStatus.FORBIDDEN,
+    );
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
+  async update(id: number, updateArticleDto: UpdateArticleDto) {
+    const updateArticle = await this.findOne(id);
+
+    // update each property provided from dto
+    Object.keys(updateArticle).forEach((property) => {
+      updateArticle[property] = updateArticleDto[property];
+    });
+
+    return await this.articleRepository.save(updateArticle);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} article`;
+  async remove(id: number) {
+    const removeArticle = await this.findOne(id);
+    this.articleRepository.delete(removeArticle);
   }
 }
