@@ -1,5 +1,4 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from '../customer/entities/customer.entity';
@@ -30,23 +29,33 @@ export class OrderService {
   }
 
   async findOne(id: number) {
-    const article = await this.orderRepository.findOne(id, {relations:['user_id']});
-    if(article)
-      return article
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: `article not found for provided id:${id}`,
-        },
-        HttpStatus.FORBIDDEN,
-      );
+    const article = await this.orderRepository.findOne(id, {
+      relations: ['user_id'],
+    });
+    if (article) return article;
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: `order not found for provided id:${id}`,
+      },
+      HttpStatus.FORBIDDEN,
+    );
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async update(id: number, updateOrderDto: UpdateOrderDto) {
+    const updateOrder = await this.findOne(id);
+
+    // update each property provided from dto
+    Object.keys(updateOrder).forEach((property) => {
+      updateOrder[property] = updateOrderDto[property];
+    });
+
+    return await this.orderRepository.save(updateOrder);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+  async remove(id: number) {
+    const removeOrder = await this.findOne(id);
+
+    this.orderRepository.delete(removeOrder);
   }
 }
