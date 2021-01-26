@@ -17,7 +17,9 @@ export class Order {
   @Column({ type: 'date' })
   date: Date;
 
-  @ManyToOne(() => Customer, (user_id: Customer) => user_id.orders)
+  @ManyToOne(() => Customer, (user_id: Customer) => user_id.orders, {
+    onDelete: 'CASCADE',
+  })
   user_id: Customer;
 
   @OneToMany(() => Invoice, (invoice: Invoice) => invoice.order)
