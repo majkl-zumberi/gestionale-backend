@@ -1,15 +1,15 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateArticleDto {
-    @IsNotEmpty()
-    name: string;
+  @IsNotEmpty()
+  name: string;
 
-    @IsNotEmpty()
-    price: number;
+  @IsNotEmpty()
+  price: number;
 
-    @IsNotEmpty()
-    expiry: Date;
+  @IsNotEmpty()
+  expiry: Date;
 
-    @IsNotEmpty()
-    available: number;
+  @IsNotEmpty()
+  available: number;
 }
