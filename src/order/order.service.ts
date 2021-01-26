@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -29,8 +29,17 @@ export class OrderService {
     return this.orderRepository.find({ relations: ['user_id'] });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async findOne(id: number) {
+    const article = await this.orderRepository.findOne(id, {relations:['user_id']});
+    if(article)
+      return article
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: `article not found for provided id:${id}`,
+        },
+        HttpStatus.FORBIDDEN,
+      );
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {
