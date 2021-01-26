@@ -4,6 +4,7 @@ import { Article } from 'src/article/entities/article.entity';
 import { Order } from 'src/order/entities/order.entity';
 import { Repository } from 'typeorm';
 import { CreateDetailOrderDto } from './dto/create-detail-order.dto';
+import { FormatDetailOrders } from './dto/format-detail-orders.dto';
 import { UpdateDetailOrderDto } from './dto/update-detail-order.dto';
 import { DetailOrder } from './entities/detail-order.entity';
 
@@ -49,6 +50,20 @@ export class DetailOrderService {
       },
       HttpStatus.FORBIDDEN,
     );
+  }
+
+  async findByOrderId(id: number) {
+    const detailOrdersByOrderId = await this.detailRepository.find({
+      relations: ['order', 'article'],
+      where: [
+        {
+          order: {
+            id: id,
+          },
+        },
+      ],
+    });
+    return FormatDetailOrders.formatOrders(detailOrdersByOrderId);
   }
 
   update(id: number, updateDetailOrderDto: UpdateDetailOrderDto) {
