@@ -1,3 +1,7 @@
-import { CreateCustomerDto } from './create-customer.dto';
-
-export class UpdateCustomerDto  {}
+export class UpdateCustomerDto {
+  name?: string;
+  lastName?: string;
+  cardNumber?: string;
+  cardType?: string;
+  address?: string;
+}
