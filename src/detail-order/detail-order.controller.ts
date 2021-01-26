@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DetailOrderService } from './detail-order.service';
 import { CreateDetailOrderDto } from './dto/create-detail-order.dto';
 import { UpdateDetailOrderDto } from './dto/update-detail-order.dto';
@@ -8,8 +16,16 @@ export class DetailOrderController {
   constructor(private readonly detailOrderService: DetailOrderService) {}
 
   @Post(':id_order/:id_article')
-  create(@Body() createDetailOrderDto: CreateDetailOrderDto, @Param('id_article') id_article: string, @Param('id_order') id_order: string) {
-    return this.detailOrderService.create(createDetailOrderDto, +id_order, +id_article);
+  create(
+    @Body() createDetailOrderDto: CreateDetailOrderDto,
+    @Param('id_article') id_article: string,
+    @Param('id_order') id_order: string,
+  ) {
+    return this.detailOrderService.create(
+      createDetailOrderDto,
+      +id_order,
+      +id_article,
+    );
   }
 
   @Get()
@@ -23,7 +39,10 @@ export class DetailOrderController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateDetailOrderDto: UpdateDetailOrderDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDetailOrderDto: UpdateDetailOrderDto,
+  ) {
     return this.detailOrderService.update(+id, updateDetailOrderDto);
   }
 
