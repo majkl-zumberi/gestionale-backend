@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CustomerModule } from './customer/customer.module';
 import { Customer } from './customer/entities/customer.entity';
+import { OrderModule } from './order/order.module';
+import { Order } from './order/entities/order.entity';
 
 @Module({
   imports: [
@@ -19,10 +21,11 @@ import { Customer } from './customer/entities/customer.entity';
       username: process.env.DB_user,
       password: process.env.DB_password,
       database: 'gestionale',
-      entities: [Customer],
+      entities: [Customer, Order],
       synchronize: true,
       keepConnectionAlive: true,
     }),
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
