@@ -5,6 +5,9 @@ export class CreateArticleDto {
   name: string;
 
   @IsNotEmpty()
+  category: string;
+
+  @IsNotEmpty()
   price: number;
 
   @IsNotEmpty()
@@ -12,4 +15,6 @@ export class CreateArticleDto {
 
   @IsNotEmpty()
   available: number;
+
+  urlimg?: string;
 }

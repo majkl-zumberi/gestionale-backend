@@ -21,12 +21,16 @@ export class CustomerService {
     return this.customerRepository.find({
       select: [
         'id',
+        'ccode',
         'name',
         'lastName',
         'email',
-        'cardType',
-        'cardNumber',
+        'piva',
         'address',
+        'city',
+        'state',
+        'cap',
+        'phonenr',
       ],
     });
   }
@@ -35,12 +39,16 @@ export class CustomerService {
     return this.customerRepository.findOne({
       select: [
         'id',
+        'ccode',
         'name',
         'lastName',
         'email',
-        'cardType',
-        'cardNumber',
+        'piva',
         'address',
+        'city',
+        'state',
+        'cap',
+        'phonenr',
       ],
       where: [{ id: id }],
     });

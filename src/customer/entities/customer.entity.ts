@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   BeforeInsert,
   OneToMany,
+  Unique,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Order } from '../../order/entities/order.entity';
@@ -11,6 +12,9 @@ import { Order } from '../../order/entities/order.entity';
 export class Customer {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ unique: true })
+  ccode: string;
 
   @Column()
   name: string;
@@ -21,23 +25,32 @@ export class Customer {
   @Column()
   email: string;
 
+  /*@Column()
+  password: string;*/
+
   @Column()
-  password: string;
+  piva: string;
 
-  @Column({ nullable: true })
-  cardNumber: string;
-
-  @Column({ nullable: true })
-  cardType: string;
+  @Column()
+  city: string;
 
   @Column({ nullable: true })
   address: string;
 
+  @Column()
+  cap: string;
+
+  @Column()
+  state: string;
+
+  @Column()
+  phonenr: string;
+
   @OneToMany(() => Order, (order: Order) => order.user_id)
   orders: Order[];
 
-  @BeforeInsert()
+  /*@BeforeInsert()
   hashPassword = () => {
     this.password = bcrypt.hashSync(this.password, 10);
-  };
+  };*/
 }

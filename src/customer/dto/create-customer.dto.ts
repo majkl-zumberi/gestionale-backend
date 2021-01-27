@@ -1,6 +1,9 @@
 import { IsNotEmpty } from 'class-validator';
 export class CreateCustomerDto {
   @IsNotEmpty()
+  ccode: string;
+
+  @IsNotEmpty()
   name: string;
 
   @IsNotEmpty()
@@ -10,11 +13,20 @@ export class CreateCustomerDto {
   email: string;
 
   @IsNotEmpty()
-  password: string;
+  address: string;
 
-  cardNumber?: string;
+  @IsNotEmpty()
+  city: string;
 
-  cardType?: string;
+  @IsNotEmpty()
+  state: string;
 
-  address?: string;
+  @IsNotEmpty()
+  cap: string;
+
+  @IsNotEmpty()
+  piva: string;
+
+  @IsNotEmpty()
+  phonenr: string;
 }

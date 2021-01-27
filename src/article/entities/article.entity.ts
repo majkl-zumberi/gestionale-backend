@@ -16,7 +16,13 @@ export class Article {
   @Column()
   name: string;
 
-  @Column({ type: 'decimal', precision: 4, scale: 2 })
+  @Column()
+  category: string;
+
+  @Column({ nullable: true })
+  urlimg: string;
+
+  @Column({ type: 'decimal', precision: 9, scale: 2 })
   price: number;
 
   @Column({ type: 'date' })
