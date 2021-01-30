@@ -14,7 +14,27 @@ export class CustomerService {
 
   async create(createCustomerDto: CreateCustomerDto) {
     const createCustomer = this.customerRepository.create(createCustomerDto);
-    return await this.customerRepository.save(createCustomer);
+    try {
+      return await this.customerRepository.save(createCustomer);
+    } catch (e) {
+      console.log(e);
+      if (e.code === 'ER_DUP_ENTRY') {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: `codice ${createCustomerDto.ccode} già esistente`,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: `${e}`,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   findAll(): Promise<Customer[]> {
