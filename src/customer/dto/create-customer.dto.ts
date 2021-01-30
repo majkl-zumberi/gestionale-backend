@@ -1,4 +1,9 @@
-import { IsNotEmpty } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsPostalCode,
+} from 'class-validator';
 export class CreateCustomerDto {
   @IsNotEmpty()
   ccode: string;
@@ -10,6 +15,7 @@ export class CreateCustomerDto {
   lastName: string;
 
   @IsNotEmpty()
+  @IsEmail()
   email: string;
 
   @IsNotEmpty()
@@ -22,11 +28,13 @@ export class CreateCustomerDto {
   state: string;
 
   @IsNotEmpty()
+  @IsPostalCode('IT')
   cap: string;
 
   @IsNotEmpty()
   piva: string;
 
   @IsNotEmpty()
+  @IsPhoneNumber('IT')
   phonenr: string;
 }
