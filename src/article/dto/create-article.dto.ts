@@ -1,4 +1,4 @@
-import { IsDate, IsNotEmpty, IsPositive } from 'class-validator';
+import { IsDate, IsDateString, IsNotEmpty, IsPositive } from 'class-validator';
 
 export class CreateArticleDto {
   @IsNotEmpty()
@@ -12,7 +12,7 @@ export class CreateArticleDto {
   price: number;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   expiry: Date;
 
   @IsNotEmpty()
