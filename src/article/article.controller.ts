@@ -1,6 +1,16 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { FilterArticleCategory } from './dto/filter-article-category.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 
 @Controller('article')
@@ -8,13 +18,18 @@ export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
   @Post(':id')
-  create(@Body() createArticleDto: CreateArticleDto, @Param('id') id:string) {
+  create(@Body() createArticleDto: CreateArticleDto, @Param('id') id: string) {
     return this.articleService.create(createArticleDto, +id);
   }
 
   @Get()
   findAll() {
     return this.articleService.findAll();
+  }
+
+  @Get('/category')
+  findByCategory(@Query() query: FilterArticleCategory) {
+    return this.articleService.findByCategory(query.name);
   }
 
   @Get(':id')
