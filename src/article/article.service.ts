@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MeasureUnit } from 'src/measure-unit/entities/measure-unit.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { Article } from './entities/article.entity';
@@ -41,6 +41,12 @@ export class ArticleService {
       },
       HttpStatus.FORBIDDEN,
     );
+  }
+
+  async findByCategory(category: string) {
+    return await this.articleRepository.find({
+      category: Like(`%${category}%`),
+    });
   }
 
   async update(id: number, updateArticleDto: UpdateArticleDto) {
