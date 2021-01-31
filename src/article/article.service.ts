@@ -50,14 +50,8 @@ export class ArticleService {
   }
 
   async update(id: number, updateArticleDto: UpdateArticleDto) {
-    const updateArticle = await this.findOne(id);
-
-    // update each property provided from dto
-    Object.keys(updateArticle).forEach((property) => {
-      updateArticle[property] = updateArticleDto[property];
-    });
-
-    return await this.articleRepository.save(updateArticle);
+    await this.articleRepository.update(id, updateArticleDto);
+    return this.findOne(id);
   }
 
   async remove(id: number) {
