@@ -67,14 +67,8 @@ export class DetailOrderService {
   }
 
   async update(id: number, updateDetailOrderDto: UpdateDetailOrderDto) {
-    const updateDetailOrder = await this.findOne(id);
-
-    // update each property provided from dto
-    Object.keys(updateDetailOrder).forEach((property) => {
-      updateDetailOrder[property] = updateDetailOrderDto[property];
-    });
-
-    return await this.detailRepository.save(updateDetailOrder);
+    await this.detailRepository.update(id, updateDetailOrderDto);
+    return this.findOne(id);
   }
 
   async remove(id: number) {

@@ -85,13 +85,8 @@ export class CustomerService {
       );
     }
 
-    const updateCustomer: Customer = await this.customerRepository.findOne(id);
-
-    // update each property provided from dto
-    Object.keys(updateCustomerDto).forEach((property) => {
-      updateCustomer[property] = updateCustomerDto[property];
-    });
-    return this.customerRepository.save(updateCustomer);
+    await this.customerRepository.update(id, updateCustomerDto);
+    return this.findOne(id);
   }
 
   async remove(id: number) {

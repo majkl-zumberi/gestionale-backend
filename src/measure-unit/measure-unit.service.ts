@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateMeasureUnitDto } from './dto/create-measure-unit.dto';
-import { UpdateMeasureUnitDto } from './dto/update-measure-unit.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateMeasureUnitDto } from './dto/create-measure-unit.dto';
+import { UpdateMeasureUnitDto } from './dto/update-measure-unit.dto';
 import { MeasureUnit } from './entities/measure-unit.entity';
 
 @Injectable()
@@ -35,14 +35,8 @@ export class MeasureUnitService {
       );
     }
 
-    const updateMeasure: MeasureUnit = await this.measureRepository.findOne(id);
-
-    // update each property provided from dto
-    Object.keys(updateMeasure).forEach((property) => {
-      updateMeasure[property] = updateMeasureUnitDto[property];
-    });
-
-    return this.measureRepository.save(updateMeasure);
+    await this.measureRepository.update(id, updateMeasureUnitDto);
+    return this.findOne(id);
   }
 
   async remove(id: number) {

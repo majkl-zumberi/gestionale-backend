@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Customer } from '../customer/entities/customer.entity';
 import { Repository } from 'typeorm';
+import { Customer } from '../customer/entities/customer.entity';
+import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
 
 @Injectable()
@@ -43,14 +43,8 @@ export class OrderService {
   }
 
   async update(id: number, updateOrderDto: UpdateOrderDto) {
-    const updateOrder = await this.findOne(id);
-
-    // update each property provided from dto
-    Object.keys(updateOrder).forEach((property) => {
-      updateOrder[property] = updateOrderDto[property];
-    });
-
-    return await this.orderRepository.save(updateOrder);
+    await this.orderRepository.update(id, updateOrderDto);
+    return this.findOne(id);
   }
 
   async remove(id: number) {

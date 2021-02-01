@@ -43,14 +43,8 @@ export class InvoiceService {
   }
 
   async update(id: number, updateInvoiceDto: UpdateInvoiceDto) {
-    const updateInvoice = await this.findOne(id);
-
-    // update each property provided from dto
-    Object.keys(updateInvoice).forEach((property) => {
-      updateInvoice[property] = updateInvoiceDto[property];
-    });
-
-    return await this.invoiceRepository.save(updateInvoice);
+    await this.invoiceRepository.update(id, updateInvoiceDto);
+    return this.findOne(id);
   }
 
   async remove(id: number) {
