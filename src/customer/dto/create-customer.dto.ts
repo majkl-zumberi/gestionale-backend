@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
@@ -17,19 +18,11 @@ export class CreateCustomerDto {
 
   @ApiProperty({​​​
     required: true,
-    description: 'Customer name',
-    default: 'Aquila',
+    description: 'Customer business name',
+    default: 'Fruta&Verdura S.r.l.',
     }​​​​)
   @IsNotEmpty()
-  name: string;
-
-  @ApiProperty({​​​
-    required: true,
-    description: 'Customer lastname',
-    default: 'Ciciretti',
-    }​​​​)
-  @IsNotEmpty()
-  lastName: string;
+  businessName: string;
 
   @ApiProperty({​​​
     required: true,

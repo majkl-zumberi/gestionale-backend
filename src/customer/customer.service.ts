@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -42,8 +43,7 @@ export class CustomerService {
       select: [
         'id',
         'ccode',
-        'name',
-        'lastName',
+        'businessName',
         'email',
         'piva',
         'address',
@@ -60,8 +60,7 @@ export class CustomerService {
       select: [
         'id',
         'ccode',
-        'name',
-        'lastName',
+        'businessName',
         'email',
         'piva',
         'address',

@@ -1,7 +1,12 @@
+/* eslint-disable prettier/prettier */
 export class UpdateCustomerDto {
-  name?: string;
-  lastName?: string;
-  cardNumber?: string;
-  cardType?: string;
+  
+  businessName?: string;
+  email?: string;
   address?: string;
+  city?: string;
+  state?: string;
+  cap?: string;
+  piva?: string;
+  phonenr?: string;
 }

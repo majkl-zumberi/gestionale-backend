@@ -1,12 +1,11 @@
+/* eslint-disable prettier/prettier */
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  BeforeInsert,
   OneToMany,
-  Unique,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+//import * as bcrypt from 'bcrypt';
 import { Order } from '../../order/entities/order.entity';
 @Entity()
 export class Customer {
@@ -17,10 +16,7 @@ export class Customer {
   ccode: string;
 
   @Column()
-  name: string;
-
-  @Column()
-  lastName: string;
+  businessName: string;
 
   @Column()
   email: string;
