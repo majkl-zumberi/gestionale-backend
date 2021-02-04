@@ -1,15 +1,16 @@
 import { Article } from 'src/article/entities/article.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
 @Entity()
-export class MeasureUnit {
+export class Category {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ unique: true })
   code: string;
 
-  @Column({ nullable: true })
-  description: string;
+  @Column()
+  descrption: string;
 
   @OneToMany(() => Article, (article: Article) => article.measure)
   articles: Article[];

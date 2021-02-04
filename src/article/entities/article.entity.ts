@@ -1,3 +1,4 @@
+import { Category } from 'src/category/entities/category.entity';
 import { DetailOrder } from 'src/detail-order/entities/detail-order.entity';
 import { MeasureUnit } from 'src/measure-unit/entities/measure-unit.entity';
 import {
@@ -15,9 +16,6 @@ export class Article {
 
   @Column()
   name: string;
-
-  @Column()
-  category: string;
 
   @Column({ nullable: true })
   urlimg: string;
@@ -41,4 +39,9 @@ export class Article {
     (detailOrder: DetailOrder) => detailOrder.article,
   )
   detailOrders: DetailOrder[];
+
+  @ManyToOne(() => Category, (category: Category) => category.articles, {
+    onDelete: 'CASCADE',
+  })
+  category: Category;
 }

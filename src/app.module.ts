@@ -16,6 +16,7 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { Invoice } from './invoice/entities/invoice.entity';
 import { DetailOrderModule } from './detail-order/detail-order.module';
 import { DetailOrder } from './detail-order/entities/detail-order.entity';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { DetailOrder } from './detail-order/entities/detail-order.entity';
     ArticleModule,
     InvoiceModule,
     DetailOrderModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
