@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Category } from 'src/category/entities/category.entity';
 import { DetailOrder } from 'src/detail-order/entities/detail-order.entity';
 import { MeasureUnit } from 'src/measure-unit/entities/measure-unit.entity';
@@ -17,14 +18,11 @@ export class Article {
   @Column()
   name: string;
 
-  @Column({ nullable: true })
-  urlimg: string;
-
   @Column({ type: 'decimal', precision: 9, scale: 2 })
   price: number;
 
   @Column({ type: 'date' })
-  expiry: Date;
+  createdAt: Date;
 
   @Column()
   available: number;

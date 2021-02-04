@@ -12,8 +12,28 @@ export class CategoryService {
     private categoryRepository: Repository<Category>,
   ) {}
 
-  create(createCategoryDto: CreateCategoryDto) {
+  async create(createCategoryDto: CreateCategoryDto) {
+    try{
     return this.categoryRepository.save(createCategoryDto);
+    }catch (e) {
+      console.log(e);
+      if (e.code === 'ER_DUP_ENTRY') {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: `codice categoria ${createCategoryDto.code} già esistente`,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: `${e}`,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   findAll() {

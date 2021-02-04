@@ -10,7 +10,7 @@ export class Category {
   code: string;
 
   @Column()
-  descrption: string;
+  description: string;
 
   @OneToMany(() => Article, (article: Article) => article.measure)
   articles: Article[];

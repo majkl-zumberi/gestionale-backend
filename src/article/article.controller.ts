@@ -17,9 +17,9 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
-  @Post(':id')
-  create(@Body() createArticleDto: CreateArticleDto, @Param('id') id: string) {
-    return this.articleService.create(createArticleDto, +id);
+  @Post(':id_measure/:id_category')
+  create(@Body() createArticleDto: CreateArticleDto, @Param('id_measure') id_measure: string, @Param('id_category') id_category: string) {
+    return this.articleService.create(createArticleDto, +id_measure, +id_category);
   }
 
   @Get()

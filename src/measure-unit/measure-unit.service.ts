@@ -14,7 +14,27 @@ export class MeasureUnitService {
   ) {}
 
   create(createMeasureUnitDto: CreateMeasureUnitDto) {
+    try{
     return this.measureRepository.save(createMeasureUnitDto);
+    }catch (e) {
+      console.log(e);
+      if (e.code === 'ER_DUP_ENTRY') {
+        throw new HttpException(
+          {
+            status: HttpStatus.BAD_REQUEST,
+            error: `codice ${createMeasureUnitDto.code} già esistente`,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: `${e}`,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   findAll() {

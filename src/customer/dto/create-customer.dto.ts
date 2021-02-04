@@ -19,7 +19,7 @@ export class CreateCustomerDto {
   @ApiProperty({​​​
     required: true,
     description: 'Customer business name',
-    default: 'Fruta&Verdura S.r.l.',
+    default: 'Frutta&Verdura S.r.l.',
     }​​​​)
   @IsNotEmpty()
   businessName: string;
