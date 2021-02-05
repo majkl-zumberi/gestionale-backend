@@ -7,9 +7,13 @@ export class Invoice {
     @PrimaryGeneratedColumn()
     id:number;
 
-    @ManyToOne(() => Order, (order: Order) => order.invoices)
+    @ManyToOne(() => Order, (order: Order) => order.invoices, {
+        onDelete: 'CASCADE',
+      })
     order: Order;
 
-    @ManyToOne(() => InvoiceMaster, (master: InvoiceMaster) => master.invoices)
+    @ManyToOne(() => InvoiceMaster, (master: InvoiceMaster) => master.invoices, {
+        onDelete: 'CASCADE',
+      })
     master: InvoiceMaster;
 }

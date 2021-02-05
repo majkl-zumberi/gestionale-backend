@@ -20,6 +20,8 @@ import { CategoryModule } from './category/category.module';
 import { Category } from './category/entities/category.entity';
 import { InvoiceMasterModule } from './invoice-master/invoice-master.module';
 import { InvoiceMaster } from './invoice-master/entities/invoice-master.entity';
+import { InvoiceTailModule } from './invoice-tail/invoice-tail.module';
+import { InvoiceTail } from './invoice-tail/entities/invoice-tail.entity';
 
 @Module({
   imports: [
@@ -34,7 +36,7 @@ import { InvoiceMaster } from './invoice-master/entities/invoice-master.entity';
       username: process.env.DB_user,
       password: process.env.DB_password,
       database: 'gestionale',
-      entities: [Customer, Order, MeasureUnit, Article, Invoice, DetailOrder, Category, InvoiceMaster],
+      entities: [Customer, Order, MeasureUnit, Article, Invoice, DetailOrder, Category, InvoiceMaster, InvoiceTail],
       synchronize: true,
       keepConnectionAlive: true,
     }),
@@ -45,6 +47,7 @@ import { InvoiceMaster } from './invoice-master/entities/invoice-master.entity';
     DetailOrderModule,
     CategoryModule,
     InvoiceMasterModule,
+    InvoiceTailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

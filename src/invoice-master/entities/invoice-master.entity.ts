@@ -1,4 +1,5 @@
 import { Customer } from "src/customer/entities/customer.entity";
+import { InvoiceTail } from "src/invoice-tail/entities/invoice-tail.entity";
 import { Invoice } from "src/invoice/entities/invoice.entity";
 import { Order } from "src/order/entities/order.entity";
 import { AfterLoad, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -17,13 +18,16 @@ export class InvoiceMaster {
       })
       customer: Customer;
       
-      @ManyToOne(() => Order, (order: Order) => order.masters, {
-        onDelete: 'CASCADE',
-      })
+    @ManyToOne(() => Order, (order: Order) => order.masters, {
+      onDelete: 'CASCADE',
+    })
       order: Order;
       
       @OneToMany(() => Invoice, (invoice: Invoice) => invoice.master)
       invoices: Invoice[];
+
+      @OneToMany(() => InvoiceTail, (invoice: InvoiceTail) => invoice.master)
+      invoicesTail: InvoiceTail[];
 
     // readonly totalprice
   protected nDoc: string;
