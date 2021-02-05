@@ -31,4 +31,9 @@ export class InvoiceController {
   remove(@Param('id') id: string) {
     return this.invoiceService.remove(+id);
   }
+
+  @Get('/master/:id')
+  findInvoiceByOrderMaster(@Param('id') id: string){
+    return this.invoiceService.findByMaster(+id);
+  }
 }

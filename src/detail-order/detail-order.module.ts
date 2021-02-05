@@ -10,5 +10,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   controllers: [DetailOrderController],
   providers: [DetailOrderService],
   imports: [TypeOrmModule.forFeature([Order, Article, DetailOrder])],
+  exports: [DetailOrderService]
 })
 export class DetailOrderModule {}

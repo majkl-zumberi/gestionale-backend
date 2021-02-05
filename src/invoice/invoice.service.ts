@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DetailOrderService } from 'src/detail-order/detail-order.service';
 import { InvoiceMaster } from 'src/invoice-master/entities/invoice-master.entity';
 import { Order } from 'src/order/entities/order.entity';
 import { Repository } from 'typeorm';
@@ -16,6 +17,7 @@ export class InvoiceService {
     private invoiceRepository: Repository<Invoice>,
     @InjectRepository(InvoiceMaster)
     private masterRepository: Repository<InvoiceMaster>,
+    private readonly detailService: DetailOrderService
   ) {}
 
   async create(createInvoiceDto: CreateInvoiceDto, id_order: number, id_master: number) {
@@ -45,6 +47,20 @@ export class InvoiceService {
       },
       HttpStatus.FORBIDDEN,
     );
+  }
+
+  async findByMaster(id:number){
+    const master = await this.invoiceRepository.findOne({
+      relations:['master','order'],
+      where: [
+        {
+          master: {
+            id: id,
+          },
+        },
+      ],
+    });
+    return await this.detailService.findByOrderId(master.order.id);
   }
 
   async update(id: number, updateInvoiceDto: UpdateInvoiceDto) {
