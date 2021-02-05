@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { InvoiceMaster } from 'src/invoice-master/entities/invoice-master.entity';
 import {
   Entity,
   Column,
@@ -44,6 +45,12 @@ export class Customer {
 
   @OneToMany(() => Order, (order: Order) => order.user_id)
   orders: Order[];
+
+  @OneToMany(
+    () => InvoiceMaster,
+    (invoiceMaster: InvoiceMaster) => invoiceMaster.customer,
+  )
+  masters: InvoiceMaster[];
 
   /*@BeforeInsert()
   hashPassword = () => {

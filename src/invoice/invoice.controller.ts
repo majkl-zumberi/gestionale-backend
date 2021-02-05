@@ -7,9 +7,9 @@ import { UpdateInvoiceDto } from './dto/update-invoice.dto';
 export class InvoiceController {
   constructor(private readonly invoiceService: InvoiceService) {}
 
-  @Post(':id')
-  create(@Body() createInvoiceDto: CreateInvoiceDto, @Param('id') id: string) {
-    return this.invoiceService.create(createInvoiceDto, +id);
+  @Post(':id_order/:id_master')
+  create(@Body() createInvoiceDto: CreateInvoiceDto, @Param('id_order') id_order: string, @Param('id_master') id_master: string) {
+    return this.invoiceService.create(createInvoiceDto, +id_order, +id_master);
   }
 
   @Get()
