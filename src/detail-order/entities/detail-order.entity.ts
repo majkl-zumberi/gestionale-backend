@@ -16,6 +16,9 @@ export class DetailOrder {
   @Column()
   quantity: number;
 
+  @Column({default:22})
+  iva: number;
+
   @ManyToOne(() => Article, (article: Article) => article.detailOrders, {
     onDelete: 'CASCADE',
   })
@@ -28,9 +31,12 @@ export class DetailOrder {
 
   // readonly totalprice
   protected total: number;
+  protected totalIva: number;
 
   @AfterLoad()
   calculateTotalPrice = () => {
     this.total = this.quantity * Number(this.article.price);
+    this.totalIva = this.quantity * Number(this.article.price) + this.iva*100;
   };
+  
 }

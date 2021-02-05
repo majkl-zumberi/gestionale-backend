@@ -3,6 +3,7 @@ export class FormatDetailOrders {
     return {
       order: orders,
       totalOrderPrice: orders.reduce((total, curr) => total + curr.total, 0),
+      totalOrderPriceIva: orders.reduce((total, curr) => total + curr.totalIva, 0),
     };
   }
 }

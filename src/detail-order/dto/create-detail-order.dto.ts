@@ -17,4 +17,11 @@ export class CreateDetailOrderDto {
     message: 'la massima quantità è 9000',
   })
   quantity: number;
+
+  @ApiProperty({​​​
+    required: false,
+    description: 'Order iva',
+    default: '22',
+    }​​​​)
+  iva: number;
 }
