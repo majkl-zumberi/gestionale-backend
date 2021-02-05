@@ -13,10 +13,10 @@ export class CategoryService {
   ) {}
 
   async create(createCategoryDto: CreateCategoryDto) {
-    try{
-    return this.categoryRepository.save(createCategoryDto);
-    }catch (e) {
-      console.log(e);
+    const createCategory = this.categoryRepository.create(createCategoryDto);
+    try {
+      return await this.categoryRepository.save(createCategory);
+    } catch (e) {
       if (e.code === 'ER_DUP_ENTRY') {
         throw new HttpException(
           {
