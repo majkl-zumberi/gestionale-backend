@@ -5,7 +5,7 @@ import {
   Column,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn
 } from 'typeorm';
 
 @Entity()
@@ -16,7 +16,7 @@ export class DetailOrder {
   @Column()
   quantity: number;
 
-  @Column({default:22})
+  @Column({ default: 22 })
   iva: number;
 
   @ManyToOne(() => Article, (article: Article) => article.detailOrders, {
@@ -36,7 +36,6 @@ export class DetailOrder {
   @AfterLoad()
   calculateTotalPrice = () => {
     this.total = this.quantity * Number(this.article.price);
-    this.totalIva = this.quantity * Number(this.article.price) + this.iva*100;
+    this.totalIva = this.total + (this.iva / 100) * this.total;
   };
-  
 }
