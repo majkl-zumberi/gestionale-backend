@@ -1,4 +1,5 @@
 import { DetailOrder } from 'src/detail-order/entities/detail-order.entity';
+import { InvoiceMaster } from 'src/invoice-master/entities/invoice-master.entity';
 import { Invoice } from 'src/invoice/entities/invoice.entity';
 import {
   Entity,
@@ -27,4 +28,7 @@ export class Order {
 
   @OneToMany(() => DetailOrder, (detailOrder: DetailOrder) => detailOrder.order)
   detailOrders: DetailOrder[];
+
+  @OneToMany(() => InvoiceMaster, (master: InvoiceMaster) => master.order)
+  masters: InvoiceMaster[];
 }
