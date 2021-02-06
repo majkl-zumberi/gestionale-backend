@@ -37,5 +37,6 @@ export class DetailOrder {
   calculateTotalPrice = () => {
     this.total = this.quantity * Number(this.article.price);
     this.totalIva = this.total + (this.iva / 100) * this.total;
+    this.totalIva = Number((Math.round(this.totalIva * 100) / 100).toFixed(2));
   };
 }
