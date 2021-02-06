@@ -1,4 +1,10 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateInvoiceTailDto } from './create-invoice-tail.dto';
-
-export class UpdateInvoiceTailDto extends PartialType(CreateInvoiceTailDto) {}
+export class UpdateInvoiceTailDto {
+  city: string;
+  address?: string;
+  cap?: string;
+  state?: string;
+  deliveryWeight?: number;
+  deliveryData?: Date;
+  paymentMethod?: string;
+  deliveryPrice?: number;
+}

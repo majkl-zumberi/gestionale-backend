@@ -1,1 +1,5 @@
-export class UpdateDetailOrderDto {}
+export class UpdateDetailOrderDto {
+  quantity?: number;
+
+  iva?: number;
+}
