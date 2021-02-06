@@ -9,7 +9,6 @@ import { InvoiceMaster } from './entities/invoice-master.entity';
 
 @Injectable()
 export class InvoiceMasterService {
-
   constructor(
     @InjectRepository(InvoiceMaster)
     private masterRepository: Repository<InvoiceMaster>,
@@ -19,26 +18,30 @@ export class InvoiceMasterService {
     private orderRepository: Repository<Order>,
   ) {}
 
-  async create(createInvoiceMasterDto: CreateInvoiceMasterDto, id_customer: number, id_order: number) {
+  async create(
+    createInvoiceMasterDto: CreateInvoiceMasterDto,
+    id_customer: number,
+    id_order: number,
+  ) {
     const customer = await this.customerRepository.findOne({ id: id_customer });
     const order = await this.orderRepository.findOne({ id: id_order });
     const newMaster = await this.masterRepository.create({
       ...createInvoiceMasterDto,
       date: new Date(),
       customer: customer,
-      order: order
+      order: order,
     });
     await this.masterRepository.save(newMaster);
     return newMaster;
   }
 
   findAll() {
-    return this.masterRepository.find({ relations:['customer','order'] });
+    return this.masterRepository.find({ relations: ['customer', 'order'] });
   }
 
   async findOne(id: number) {
     const article = await this.masterRepository.findOne(id, {
-      relations: ['customer','order'],
+      relations: ['customer', 'order'],
     });
     if (article) return article;
     throw new HttpException(
@@ -50,11 +53,13 @@ export class InvoiceMasterService {
     );
   }
 
-  update(id: number, updateInvoiceMasterDto: UpdateInvoiceMasterDto) {
-    return `This action updates a #${id} invoiceMaster`;
+  async update(id: number, updateInvoiceMasterDto: UpdateInvoiceMasterDto) {
+    await this.masterRepository.update(id, updateInvoiceMasterDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} invoiceMaster`;
+  async remove(id: number) {
+    const removeMasterInvoice = await this.masterRepository.findOne(id);
+    this.masterRepository.delete(removeMasterInvoice);
   }
 }
