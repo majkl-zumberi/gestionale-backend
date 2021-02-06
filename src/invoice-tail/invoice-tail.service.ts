@@ -10,26 +10,26 @@ import { InvoiceTail } from './entities/invoice-tail.entity';
 export class InvoiceTailService {
   constructor(
     @InjectRepository(InvoiceTail)
-    private orderRepository: Repository<InvoiceTail>,
+    private invoiceTailRepository: Repository<InvoiceTail>,
     @InjectRepository(InvoiceMaster)
     private masterRepository: Repository<InvoiceMaster>,
-  ){}
+  ) {}
   async create(createInvoiceTailDto: CreateInvoiceTailDto, id: number) {
     const master = await this.masterRepository.findOne({ id });
-    const newInvoiceTail = this.orderRepository.create({
+    const newInvoiceTail = this.invoiceTailRepository.create({
       ...createInvoiceTailDto,
-      master:master
+      master: master,
     });
-    return this.orderRepository.save(newInvoiceTail);
+    return this.invoiceTailRepository.save(newInvoiceTail);
   }
 
   findAll() {
-    return this.orderRepository.find({ relations: ['master'] });
+    return this.invoiceTailRepository.find({ relations: ['master'] });
   }
 
   async findOne(id: number) {
-    const invoiceTail = await this.orderRepository.findOne(id, {
-      relations: ['master']
+    const invoiceTail = await this.invoiceTailRepository.findOne(id, {
+      relations: ['master'],
     });
     if (invoiceTail) return invoiceTail;
     throw new HttpException(
@@ -41,11 +41,13 @@ export class InvoiceTailService {
     );
   }
 
-  update(id: number, updateInvoiceTailDto: UpdateInvoiceTailDto) {
-    return `This action updates a #${id} invoiceTail`;
+  async update(id: number, updateInvoiceTailDto: UpdateInvoiceTailDto) {
+    await this.invoiceTailRepository.update(id, updateInvoiceTailDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} invoiceTail`;
+  async remove(id: number) {
+    const removeTail = await this.findOne(id);
+    this.invoiceTailRepository.delete(removeTail);
   }
 }
