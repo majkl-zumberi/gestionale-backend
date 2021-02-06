@@ -43,12 +43,17 @@ export class DetailOrderController {
     return this.detailOrderService.findByOrderId(+id);
   }
 
-  @Put('/order/:id')
+  @Put('/order/:id_order/article/:id_article')
   updateByOrder(
-    @Param('id') id: string,
+    @Param('id_order') idOrder: string,
+    @Param('id_article') idArticle: string,
     @Body() updateDetailOrderDto: UpdateDetailOrderDto,
   ) {
-    return this.detailOrderService.updateByOrderId(+id, updateDetailOrderDto);
+    return this.detailOrderService.updateByOrderId(
+      +idOrder,
+      +idArticle,
+      updateDetailOrderDto,
+    );
   }
 
   @Put(':id')

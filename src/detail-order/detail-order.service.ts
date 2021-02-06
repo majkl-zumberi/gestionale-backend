@@ -73,6 +73,7 @@ export class DetailOrderService {
 
   async updateByOrderId(
     orderId: number,
+    articleId: number,
     updateDetailOrderDto: UpdateDetailOrderDto,
   ) {
     const detailByOrder = await this.detailRepository.findOne({
@@ -81,6 +82,9 @@ export class DetailOrderService {
         {
           order: {
             id: orderId,
+          },
+          article: {
+            id: articleId,
           },
         },
       ],
