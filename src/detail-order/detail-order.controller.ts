@@ -1,11 +1,11 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Put,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Post,
+  Put,
 } from '@nestjs/common';
 import { DetailOrderService } from './detail-order.service';
 import { CreateDetailOrderDto } from './dto/create-detail-order.dto';
@@ -41,6 +41,14 @@ export class DetailOrderController {
   @Get('/order/:id')
   findByOrder(@Param('id') id: string) {
     return this.detailOrderService.findByOrderId(+id);
+  }
+
+  @Put('/order/:id')
+  updateByOrder(
+    @Param('id') id: string,
+    @Body() updateDetailOrderDto: UpdateDetailOrderDto,
+  ) {
+    return this.detailOrderService.updateByOrderId(+id, updateDetailOrderDto);
   }
 
   @Put(':id')
