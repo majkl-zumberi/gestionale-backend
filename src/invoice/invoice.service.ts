@@ -17,27 +17,31 @@ export class InvoiceService {
     private invoiceRepository: Repository<Invoice>,
     @InjectRepository(InvoiceMaster)
     private masterRepository: Repository<InvoiceMaster>,
-    private readonly detailService: DetailOrderService
+    private readonly detailService: DetailOrderService,
   ) {}
 
-  async create(createInvoiceDto: CreateInvoiceDto, id_order: number, id_master: number) {
+  async create(
+    createInvoiceDto: CreateInvoiceDto,
+    id_order: number,
+    id_master: number,
+  ) {
     const order = await this.orderRepository.findOne({ id: id_order });
     const master = await this.masterRepository.findOne({ id: id_master });
     const newInvoice = await this.invoiceRepository.create({
       ...createInvoiceDto,
       order: order,
-      master: master
+      master: master,
     });
     return await this.invoiceRepository.save(newInvoice);
   }
 
   findAll() {
-    return this.invoiceRepository.find({ relations: ['order','master'] });
+    return this.invoiceRepository.find({ relations: ['order', 'master'] });
   }
 
   async findOne(id: number) {
     const article = await this.invoiceRepository.findOne(id, {
-      relations: ['order','master'],
+      relations: ['order', 'master'],
     });
     if (article) return article;
     throw new HttpException(
@@ -49,9 +53,9 @@ export class InvoiceService {
     );
   }
 
-  async findByMaster(id:number){
+  async findByMaster(id: number) {
     const master = await this.invoiceRepository.findOne({
-      relations:['master','order'],
+      relations: ['master', 'order'],
       where: [
         {
           master: {
