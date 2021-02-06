@@ -71,6 +71,22 @@ export class DetailOrderService {
     return this.findOne(id);
   }
 
+  async updateByOrderId(
+    orderId: number,
+    updateDetailOrderDto: UpdateDetailOrderDto,
+  ) {
+    const detailByOrder = await this.detailRepository.findOne({
+      relations: ['order', 'article'],
+      where: [
+        {
+          order: {
+            id: orderId,
+          },
+        },
+      ],
+    });
+    await this.detailRepository.update(detailByOrder.id, updateDetailOrderDto);
+  }
   async remove(id: number) {
     const updateDetailOrder = await this.findOne(id);
 
