@@ -19,6 +19,12 @@ export class DetailOrder {
   @Column({ default: 22 })
   iva: number;
 
+  @Column({ nullable: true})
+  note:string;
+
+  @Column({nullable:true})
+  discount: number;
+
   @ManyToOne(() => Article, (article: Article) => article.detailOrders, {
     onDelete: 'CASCADE',
   })
@@ -31,12 +37,14 @@ export class DetailOrder {
 
   // readonly totalprice
   protected total: number;
+  protected totalDiscount: number;
   protected totalIva: number;
 
   @AfterLoad()
   calculateTotalPrice = () => {
     this.total = this.quantity * Number(this.article.price);
-    this.totalIva = this.total + (this.iva / 100) * this.total;
+    this.totalDiscount = this.total - (this.discount/100) * this.total;
+    this.totalIva = this.totalDiscount + (this.iva / 100) * this.totalDiscount;
     this.totalIva = Number((Math.round(this.totalIva * 100) / 100).toFixed(2));
   };
 }

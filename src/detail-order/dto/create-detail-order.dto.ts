@@ -24,4 +24,18 @@ export class CreateDetailOrderDto {
     default: '22',
     }​​​​)
   iva: number;
+
+  @ApiProperty({​​​
+    required: false,
+    description: 'Order note',
+    default: 'Ordine di Maria',
+    }​​​​)
+  note: string;
+
+  @ApiProperty({​​​
+    required: false,
+    description: 'Invoice discount',
+    default: '22',
+    }​​​​)
+  discount: number;
 }
