@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { InvoiceTailService } from './invoice-tail.service';
 import { CreateInvoiceTailDto } from './dto/create-invoice-tail.dto';
 import { UpdateInvoiceTailDto } from './dto/update-invoice-tail.dto';
@@ -8,7 +16,10 @@ export class InvoiceTailController {
   constructor(private readonly invoiceTailService: InvoiceTailService) {}
 
   @Post(':id_master')
-  create(@Body() createInvoiceTailDto: CreateInvoiceTailDto, @Param('id_master') id_master: string) {
+  create(
+    @Body() createInvoiceTailDto: CreateInvoiceTailDto,
+    @Param('id_master') id_master: string,
+  ) {
     return this.invoiceTailService.create(createInvoiceTailDto, +id_master);
   }
 
@@ -22,8 +33,16 @@ export class InvoiceTailController {
     return this.invoiceTailService.findOne(+id);
   }
 
+  @Get('/master/:id')
+  findInvoiceByOrderMaster(@Param('id') id: string) {
+    return this.invoiceTailService.findByMaster(+id);
+  }
+
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateInvoiceTailDto: UpdateInvoiceTailDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateInvoiceTailDto: UpdateInvoiceTailDto,
+  ) {
     return this.invoiceTailService.update(+id, updateInvoiceTailDto);
   }
 
