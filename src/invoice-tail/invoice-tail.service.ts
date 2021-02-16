@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InvoiceMaster } from 'src/invoice-master/entities/invoice-master.entity';
+import { Order } from 'src/order/entities/order.entity';
 import { Repository } from 'typeorm';
 import { CreateInvoiceTailDto } from './dto/create-invoice-tail.dto';
 import { UpdateInvoiceTailDto } from './dto/update-invoice-tail.dto';
@@ -9,6 +10,8 @@ import { InvoiceTail } from './entities/invoice-tail.entity';
 @Injectable()
 export class InvoiceTailService {
   constructor(
+    @InjectRepository(Order)
+    private orderRepository: Repository<Order>,
     @InjectRepository(InvoiceTail)
     private invoiceTailRepository: Repository<InvoiceTail>,
     @InjectRepository(InvoiceMaster)
@@ -39,6 +42,20 @@ export class InvoiceTailService {
       },
       HttpStatus.FORBIDDEN,
     );
+  }
+
+  async findByMaster(invoiceMasterId: number) {
+    const master = await this.invoiceTailRepository.findOne({
+      relations: ['master'],
+      where: [
+        {
+          master: {
+            id: invoiceMasterId,
+          },
+        },
+      ],
+    });
+    return master;
   }
 
   async update(id: number, updateInvoiceTailDto: UpdateInvoiceTailDto) {
