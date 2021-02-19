@@ -38,13 +38,17 @@ export class DetailOrder {
   // readonly totalprice
   protected total: number;
   protected totalDiscount: number;
+  protected valueDiscount: number;
   protected totalIva: number;
+  protected valueIva: number;
 
   @AfterLoad()
   calculateTotalPrice = () => {
     this.total = this.quantity * Number(this.article.price);
     this.totalDiscount = this.total - (this.discount/100) * this.total;
+    this.valueDiscount = this.total - this.totalDiscount;
     this.totalIva = this.totalDiscount + (this.iva / 100) * this.totalDiscount;
     this.totalIva = Number((Math.round(this.totalIva * 100) / 100).toFixed(2));
+    this.valueIva = this.totalIva - this.totalDiscount;
   };
 }
