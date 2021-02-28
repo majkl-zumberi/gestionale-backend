@@ -59,7 +59,7 @@ export class InvoiceMasterService {
   }
 
   async remove(id: number) {
-    const removeMasterInvoice = await this.masterRepository.findOne(id);
-    this.masterRepository.delete(removeMasterInvoice);
+    await this.masterRepository.findOne(id);
+    this.masterRepository.delete(id);
   }
 }
