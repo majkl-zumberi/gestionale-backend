@@ -22,7 +22,7 @@ export class DetailOrder {
   @Column({ nullable: true})
   note:string;
 
-  @Column({nullable:true})
+  @Column({nullable:true, type: 'decimal', precision: 9, scale: 2})
   discount: number;
 
   @ManyToOne(() => Article, (article: Article) => article.detailOrders, {
