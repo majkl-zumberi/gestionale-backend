@@ -27,7 +27,13 @@ export class AppService {
   ){}
 
   async getCount(){
-    console.log(await this.articleRepository.count());
-    return "niente";
+    const article = await this.articleRepository.count();
+    const category = await this.categoryRepository.count();
+    const customer = await this.customerRepository.count();
+    const master = await this.masterRepository.count();
+    const measure = await this.measureRepository.count();
+    const oreder = await this.orderRepository.count();
+
+    return {article, category, customer, master, measure, oreder};
   }
 }
