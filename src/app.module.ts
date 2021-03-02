@@ -40,6 +40,7 @@ import { InvoiceTail } from './invoice-tail/entities/invoice-tail.entity';
       synchronize: true,
       keepConnectionAlive: true,
     }),
+    TypeOrmModule.forFeature([Article, Category, Order, Customer, InvoiceMaster, MeasureUnit]),
     OrderModule,
     MeasureUnitModule,
     ArticleModule,
