@@ -5,7 +5,7 @@ import {
   Column,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
@@ -19,10 +19,10 @@ export class DetailOrder {
   @Column({ default: 22 })
   iva: number;
 
-  @Column({ nullable: true})
-  note:string;
+  @Column({ nullable: true })
+  note: string;
 
-  @Column({nullable:true, type: 'decimal', precision: 9, scale: 2})
+  @Column({ nullable: true, type: 'decimal', precision: 9, scale: 2 })
   discount: number;
 
   @ManyToOne(() => Article, (article: Article) => article.detailOrders, {
@@ -41,14 +41,20 @@ export class DetailOrder {
   protected valueDiscount: number;
   protected totalIva: number;
   protected valueIva: number;
+  protected netPrice: number;
+  protected rowTotal: number;
 
   @AfterLoad()
   calculateTotalPrice = () => {
     this.total = this.quantity * Number(this.article.price);
-    this.totalDiscount = this.total - (this.discount/100) * this.total;
+    this.totalDiscount = this.total - (this.discount / 100) * this.total;
     this.valueDiscount = this.total - this.totalDiscount;
     this.totalIva = this.totalDiscount + (this.iva / 100) * this.totalDiscount;
     this.totalIva = Number((Math.round(this.totalIva * 100) / 100).toFixed(2));
     this.valueIva = this.totalIva - this.totalDiscount;
+    this.netPrice =
+      Number(this.article.price) -
+      (this.discount / 100) * Number(this.article.price);
+    this.rowTotal = this.totalDiscount + this.totalIva;
   };
 }
