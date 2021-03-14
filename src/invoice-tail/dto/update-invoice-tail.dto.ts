@@ -7,4 +7,5 @@ export class UpdateInvoiceTailDto {
   deliveryData?: Date;
   paymentMethod?: string;
   deliveryPrice?: number;
+  tailDiscount?: number;
 }

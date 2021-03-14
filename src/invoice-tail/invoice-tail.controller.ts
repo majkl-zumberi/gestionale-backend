@@ -28,9 +28,12 @@ export class InvoiceTailController {
     return this.invoiceTailService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.invoiceTailService.findOne(+id);
+  @Get(':id_tail/master/:id_master')
+  findOne(
+    @Param('id_tail') id_tail: string,
+    @Param('id_master') id_master: string,
+  ) {
+    return this.invoiceTailService.findOne(+id_tail, +id_master);
   }
 
   @Get('/master/:id')
@@ -38,12 +41,17 @@ export class InvoiceTailController {
     return this.invoiceTailService.findByMaster(+id);
   }
 
-  @Put(':id')
+  @Put(':id_tail/master/:id_master')
   update(
-    @Param('id') id: string,
+    @Param('id_tail') id_tail: string,
     @Body() updateInvoiceTailDto: UpdateInvoiceTailDto,
+    @Param('id_master') id_master: string,
   ) {
-    return this.invoiceTailService.update(+id, updateInvoiceTailDto);
+    return this.invoiceTailService.update(
+      +id_tail,
+      updateInvoiceTailDto,
+      +id_master,
+    );
   }
 
   @Delete(':id')

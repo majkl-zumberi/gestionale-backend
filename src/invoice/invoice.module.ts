@@ -13,6 +13,16 @@ import { Article } from 'src/article/entities/article.entity';
 @Module({
   controllers: [InvoiceController],
   providers: [InvoiceService, DetailOrderService],
-  imports: [TypeOrmModule.forFeature([Invoice, Order, InvoiceMaster, DetailOrder, Article]), DetailOrderModule]
+  imports: [
+    TypeOrmModule.forFeature([
+      Invoice,
+      Order,
+      InvoiceMaster,
+      DetailOrder,
+      Article,
+    ]),
+    DetailOrderModule,
+  ],
+  exports: [InvoiceService],
 })
 export class InvoiceModule {}
