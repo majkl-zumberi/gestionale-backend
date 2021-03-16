@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from 'src/customer/entities/customer.entity';
 import { Order } from 'src/order/entities/order.entity';
-import { Repository } from 'typeorm';
+import { getManager, Repository } from 'typeorm';
 import { CreateInvoiceMasterDto } from './dto/create-invoice-master.dto';
 import { UpdateInvoiceMasterDto } from './dto/update-invoice-master.dto';
 import { InvoiceMaster } from './entities/invoice-master.entity';
@@ -51,6 +51,22 @@ export class InvoiceMasterService {
       },
       HttpStatus.FORBIDDEN,
     );
+  }
+
+  async statistics() {
+    const entityManager = getManager();
+    const someQuery = await entityManager.query(`
+    SELECT YEAR(date) as year_val, MONTH(date) as month_val ,COUNT(*) as total
+    FROM invoice_master
+    GROUP BY YEAR(date), MONTH(date)`);
+
+    console.log({ someQuery });
+    return someQuery;
+    /**
+      * SELECT YEAR(date) as year_val, MONTH(date) as month_val ,COUNT(*) as total
+        FROM invoice_master
+        GROUP BY YEAR(date), MONTH(date)
+      */
   }
 
   async update(id: number, updateInvoiceMasterDto: UpdateInvoiceMasterDto) {
