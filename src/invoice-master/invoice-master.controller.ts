@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { InvoiceMasterService } from './invoice-master.service';
 import { CreateInvoiceMasterDto } from './dto/create-invoice-master.dto';
 import { UpdateInvoiceMasterDto } from './dto/update-invoice-master.dto';
@@ -8,13 +16,26 @@ export class InvoiceMasterController {
   constructor(private readonly invoiceMasterService: InvoiceMasterService) {}
 
   @Post(':id_customer/:id_order')
-  create(@Body() createInvoiceMasterDto: CreateInvoiceMasterDto, @Param('id_customer') id_customer: string, @Param('id_order') id_order: string) {
-    return this.invoiceMasterService.create(createInvoiceMasterDto, +id_customer, +id_order);
+  create(
+    @Body() createInvoiceMasterDto: CreateInvoiceMasterDto,
+    @Param('id_customer') id_customer: string,
+    @Param('id_order') id_order: string,
+  ) {
+    return this.invoiceMasterService.create(
+      createInvoiceMasterDto,
+      +id_customer,
+      +id_order,
+    );
   }
 
   @Get()
   findAll() {
     return this.invoiceMasterService.findAll();
+  }
+
+  @Get('statistics')
+  statistics() {
+    return this.invoiceMasterService.statistics();
   }
 
   @Get(':id')
@@ -23,7 +44,10 @@ export class InvoiceMasterController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateInvoiceMasterDto: UpdateInvoiceMasterDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateInvoiceMasterDto: UpdateInvoiceMasterDto,
+  ) {
     return this.invoiceMasterService.update(+id, updateInvoiceMasterDto);
   }
 
