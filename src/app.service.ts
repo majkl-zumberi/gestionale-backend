@@ -10,7 +10,6 @@ import { Order } from './order/entities/order.entity';
 
 @Injectable()
 export class AppService {
-
   constructor(
     @InjectRepository(Article)
     private articleRepository: Repository<Article>,
@@ -23,17 +22,17 @@ export class AppService {
     @InjectRepository(MeasureUnit)
     private measureRepository: Repository<MeasureUnit>,
     @InjectRepository(Order)
-    private orderRepository: Repository<Order>
-  ){}
+    private orderRepository: Repository<Order>,
+  ) {}
 
-  async getCount(){
+  async getCount() {
     const article = await this.articleRepository.count();
     const category = await this.categoryRepository.count();
     const customer = await this.customerRepository.count();
     const master = await this.masterRepository.count();
     const measure = await this.measureRepository.count();
-    const oreder = await this.orderRepository.count();
+    const order = await this.orderRepository.count();
 
-    return {article, category, customer, master, measure, oreder};
+    return { article, category, customer, master, measure, order };
   }
 }
