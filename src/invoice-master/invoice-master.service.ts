@@ -58,7 +58,8 @@ export class InvoiceMasterService {
     const someQuery = await entityManager.query(`
     SELECT YEAR(date) as year_val, MONTH(date) as month_val ,COUNT(*) as total
     FROM invoice_master
-    GROUP BY YEAR(date), MONTH(date)`);
+    GROUP BY YEAR(date), MONTH(date)
+    ORDER BY YEAR(date), MONTH(date)`);
 
     console.log({ someQuery });
     return someQuery;
