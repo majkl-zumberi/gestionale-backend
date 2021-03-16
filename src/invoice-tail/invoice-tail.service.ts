@@ -4,7 +4,6 @@ import { DetailOrder } from 'src/detail-order/entities/detail-order.entity';
 import { InvoiceMaster } from 'src/invoice-master/entities/invoice-master.entity';
 import { Invoice } from 'src/invoice/entities/invoice.entity';
 import { InvoiceService } from 'src/invoice/invoice.service';
-import { Order } from 'src/order/entities/order.entity';
 import { Repository } from 'typeorm';
 import { CalculateTailDiscountValue } from './dto/calculate-value-tail-discount.dto';
 import { CreateInvoiceTailDto } from './dto/create-invoice-tail.dto';
@@ -75,14 +74,8 @@ export class InvoiceTailService {
     return tailValue;
   }
 
-  async update(
-    id: number,
-    updateInvoiceTailDto: UpdateInvoiceTailDto,
-    id_master: number,
-  ) {
-    await this.invoiceTailRepository.update(id, updateInvoiceTailDto);
-
-    return this.findOne(id, id_master);
+  async update(id: number, updateInvoiceTailDto: UpdateInvoiceTailDto) {
+    return await this.invoiceTailRepository.update(id, updateInvoiceTailDto);
   }
 
   async remove(id: number) {

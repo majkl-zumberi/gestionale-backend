@@ -1,15 +1,15 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Put,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Post,
+  Put,
 } from '@nestjs/common';
-import { InvoiceTailService } from './invoice-tail.service';
 import { CreateInvoiceTailDto } from './dto/create-invoice-tail.dto';
 import { UpdateInvoiceTailDto } from './dto/update-invoice-tail.dto';
+import { InvoiceTailService } from './invoice-tail.service';
 
 @Controller('invoice-tail')
 export class InvoiceTailController {
@@ -41,17 +41,12 @@ export class InvoiceTailController {
     return this.invoiceTailService.findByMaster(+id);
   }
 
-  @Put(':id_tail/master/:id_master')
+  @Put(':id_tail')
   update(
     @Param('id_tail') id_tail: string,
     @Body() updateInvoiceTailDto: UpdateInvoiceTailDto,
-    @Param('id_master') id_master: string,
   ) {
-    return this.invoiceTailService.update(
-      +id_tail,
-      updateInvoiceTailDto,
-      +id_master,
-    );
+    return this.invoiceTailService.update(+id_tail, updateInvoiceTailDto);
   }
 
   @Delete(':id')
