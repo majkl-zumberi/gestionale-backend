@@ -33,6 +33,11 @@ export class DetailOrderController {
     return this.detailOrderService.findAll();
   }
 
+  @Get('statistics')
+  statistics() {
+    return this.detailOrderService.statistics();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.detailOrderService.findOne(+id);

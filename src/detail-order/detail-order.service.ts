@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from 'src/article/entities/article.entity';
 import { Order } from 'src/order/entities/order.entity';
-import { Repository } from 'typeorm';
+import { getManager, Repository } from 'typeorm';
 import { CreateDetailOrderDto } from './dto/create-detail-order.dto';
 import { FormatDetailOrders } from './dto/format-detail-orders.dto';
 import { UpdateDetailOrderDto } from './dto/update-detail-order.dto';
@@ -69,6 +69,21 @@ export class DetailOrderService {
   async update(id: number, updateDetailOrderDto: UpdateDetailOrderDto) {
     await this.detailRepository.update(id, updateDetailOrderDto);
     return this.findOne(id);
+  }
+
+  async statistics() {
+    const entityManager = getManager();
+    const someQuery = await entityManager.query(`
+    SELECT c.articleId as id, a.name AS name, count(c.id) as recurrence, SUM(c.quantity) as total FROM article a
+    LEFT JOIN detail_order c ON c.articleId = a.id
+    GROUP BY a.id`);
+    console.log({ someQuery });
+    return someQuery;
+    /**
+     * SELECT c.articleId as id, a.name AS name, count(c.id) as total FROM article a
+       LEFT JOIN detail_order c ON c.articleId = a.id
+       GROUP BY a.id
+     */
   }
 
   async updateByOrderId(
